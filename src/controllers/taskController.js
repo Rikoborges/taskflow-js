@@ -13,7 +13,6 @@ exports.createTask = async (req, res) => {
 // Função para listar todas as tarefas (GET)
 exports.getTasks = async (req, res) => {
   try {
-    mongod;
     const tasks = await Task.find({});
     res.status(200).json(tasks);
   } catch (error) {
