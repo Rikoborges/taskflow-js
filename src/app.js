@@ -1,30 +1,30 @@
 const express = require("express");
-const app = express();
 require("dotenv").config();
+
 const connectDB = require("./config/database");
 const config = require("./config/config");
 const logger = require("./utils/logger");
-const math = require("./utils/math");
 const taskRoutes = require("./routes/taskRoutes");
+
+const app = express();
 
 // Conectar ao MongoDB
 connectDB();
 
-// Middleware para parsing de JSON
+// Middlewares
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Rotas
-app.use("/tasks", taskRoutes);
-
-// Rota básica
 app.get("/", (req, res) => {
-  res.send("API TaskFlow em funcionamento");
+  res.json({ message: "TaskFlow API rodando!" });
 });
 
-// Iniciar o servidor
-app.listen(config.port, () => {
-  logger.log("Application démarrée");
-  console.log("Port :", config.port);
-  console.log("2 + 3 =", math.add(2, 3));
-  console.log("4 x 5 =", math.multiply(4, 5));
+app.use("/api/tasks", taskRoutes);  // ← Mudei de /tasks para /api/tasks
+
+// Tratamento 404
+app.use((req, res) => {
+  res.status(404).json({ error: "Rota não encontrada" });
 });
+
+module.exports = app;

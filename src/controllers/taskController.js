@@ -1,6 +1,6 @@
 const Task = require("../models/Task");
 
-// Função para criar uma tarefa (POST)
+// Créer une tâche (POST)
 exports.createTask = async (req, res) => {
   try {
     const task = await Task.create(req.body);
@@ -10,7 +10,7 @@ exports.createTask = async (req, res) => {
   }
 };
 
-// Função para listar todas as tarefas (GET)
+// Lister toutes les tâches (GET)
 exports.getTasks = async (req, res) => {
   try {
     const tasks = await Task.find({});
@@ -20,23 +20,44 @@ exports.getTasks = async (req, res) => {
   }
 };
 
-// Função para atualizar uma tarefa (PUT)
+// Lister seulement les tâches complétées (GET /completed)
+exports.getCompletedTasks = async (req, res) => {
+  try {
+    const tasks = await Task.find({ completed: true });
+    res.status(200).json(tasks);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Mettre à jour une tâche (PUT)
 exports.updateTask = async (req, res) => {
   try {
     const task = await Task.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
+      runValidators: true, // Valida ao atualizar
     });
+    
+    if (!task) {
+      return res.status(404).json({ error: "Tâche non trouvée" });
+    }
+    
     res.json(task);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-// Função para deletar uma tarefa (DELETE)
+// Supprimer une tâche (DELETE)
 exports.deleteTask = async (req, res) => {
   try {
-    await Task.findByIdAndDelete(req.params.id);
-    res.json({ message: "Task supprimée" });
+    const task = await Task.findByIdAndDelete(req.params.id);
+    
+    if (!task) {
+      return res.status(404).json({ error: "Tâche non trouvée" });
+    }
+    
+    res.json({ message: "Tâche supprimée avec succès" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
