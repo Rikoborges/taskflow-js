@@ -18,18 +18,20 @@ mongoose
 
 // Importer les routes
 const taskRoutes = require("./src/routes/taskRoutes");
+const authRoutes = require("./src/routes/authRoutes");  // ← AJOUTER CETTE LIGNE
 
 // Utiliser les routes
-app.use("/api/tasks", taskRoutes);
+app.use("/api/auth", authRoutes);    // ← AJOUTER CETTE LIGNE (authentification)
+app.use("/api/tasks", taskRoutes);   // Routes des tâches
 
 // Route racine
 app.get("/", (req, res) => {
-  res.json({ message: "API TaskFlow en fonctionnement!" });
+  res.json({ message: "🚀 API TaskFlow en fonctionnement!" });
 });
 
 // Gestion des erreurs 404
 app.use((req, res) => {
-  res.status(404).json({ error: "Route non trouvée" });
+  res.status(404).json({ error: "❌ Route non trouvée" });
 });
 
 // Serveur
