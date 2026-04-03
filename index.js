@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
@@ -18,11 +20,11 @@ mongoose
 
 // Importer les routes
 const taskRoutes = require("./src/routes/taskRoutes");
-const authRoutes = require("./src/routes/authRoutes");  // ← AJOUTER CETTE LIGNE
+const authRoutes = require("./src/routes/authRoutes"); // ← AJOUTER CETTE LIGNE
 
 // Utiliser les routes
-app.use("/api/auth", authRoutes);    // ← AJOUTER CETTE LIGNE (authentification)
-app.use("/api/tasks", taskRoutes);   // Routes des tâches
+app.use("/api/auth", authRoutes); // ← AJOUTER CETTE LIGNE (authentification)
+app.use("/api/tasks", taskRoutes); // Routes des tâches
 
 // Route racine
 app.get("/", (req, res) => {

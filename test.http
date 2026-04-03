@@ -1,6 +1,37 @@
-### Créer une tâche
+
+### AUTHENTIFICATION - S'inscrire
+
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "goku@dragonball.com",
+  "password": "SonGoku123"
+}
+
+
+### AUTHENTIFICATION - Se connecter
+
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "goku@dragonball.com",
+  "password": "SonGoku123"
+}
+
+
+### TÂCHES - Lister toutes les tâches (Protégée)
+
+GET http://localhost:3000/api/tasks
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2Y4ODFjOTM0ZjQ2NmYzMzViNzAzZiIsImVtYWlsIjoiZ29rdUBkcmFnb25iYWxsLmNvbSIsImlhdCI6MTc3NTIwODUyMywiZXhwIjoxNzc1Mjk0OTIzfQ.CIMNsJ3PFwtxQUos8tBgVZlwxruhN8kGhmFX7BgcSqI
+
+
+### TÂCHES - Créer une tâche (Protégée)
+
 POST http://localhost:3000/api/tasks
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2Y4ODFjOTM0ZjQ2NmYzMzViNzAzZiIsImVtYWlsIjoiZ29rdUBkcmFnb25iYWxsLmNvbSIsImlhdCI6MTc3NTIwODUyMywiZXhwIjoxNzc1Mjk0OTIzfQ.CIMNsJ3PFwtxQUos8tBgVZlwxruhN8kGhmFX7BgcSqI
 
 {
   "title": "Apprendre Node.js",
@@ -9,20 +40,26 @@ Content-Type: application/json
   "completed": false
 }
 
-### Lister toutes les tâches
-GET http://localhost:3000/api/tasks
 
-### Mettre à jour une tâche
+### TÂCHES - Chercher une tâche par ID (Protégée)
+
+GET http://localhost:3000/api/tasks/METS_L_ID_ICI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2Y4ODFjOTM0ZjQ2NmYzMzViNzAzZiIsImVtYWlsIjoiZ29rdUBkcmFnb25iYWxsLmNvbSIsImlhdCI6MTc3NTIwODUyMywiZXhwIjoxNzc1Mjk0OTIzfQ.CIMNsJ3PFwtxQUos8tBgVZlwxruhN8kGhmFX7BgcSqI
+
+
+### TÂCHES - Mettre à jour une tâche (Protégée)
+
 PUT http://localhost:3000/api/tasks/METS_L_ID_ICI
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2Y4ODFjOTM0ZjQ2NmYzMzViNzAzZiIsImVtYWlsIjoiZ29rdUBkcmFnb25iYWxsLmNvbSIsImlhdCI6MTc3NTIwODUyMywiZXhwIjoxNzc1Mjk0OTIzfQ.CIMNsJ3PFwtxQUos8tBgVZlwxruhN8kGhmFX7BgcSqI
 
 {
   "title": "Tâche mise à jour",
   "completed": true
 }
 
-### Supprimer une tâche
-DELETE http://localhost:3000/api/tasks/METS_L_ID_ICI
 
-### Chercher une tâche par ID
-GET http://localhost:3000/api/tasks/METS_L_ID_ICI
+### TÂCHES - Supprimer une tâche (Protégée)
+
+DELETE http://localhost:3000/api/tasks/METS_L_ID_ICI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Y2Y4ODFjOTM0ZjQ2NmYzMzViNzAzZiIsImVtYWlsIjoiZ29rdUBkcmFnb25iYWxsLmNvbSIsImlhdCI6MTc3NTIwODUyMywiZXhwIjoxNzc1Mjk0OTIzfQ.CIMNsJ3PFwtxQUos8tBgVZlwxruhN8kGhmFX7BgcSqI

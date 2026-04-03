@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
-    return res.status(401).json({ error: "❌ Token manquant" });
+    return res.status(401).json({ error: " Token manquant" });
   }
 
   // Format: "Bearer token"
@@ -16,14 +16,14 @@ module.exports = (req, res, next) => {
   try {
     // Vérifier et décoder le token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    
+
     // Ajouter l'ID de l'utilisateur à la requête
     req.userId = decoded.id;
     req.userEmail = decoded.email;
-    
+
     // Continuer vers la prochaine fonction
     next();
   } catch (error) {
-    res.status(401).json({ error: "❌ Token invalide ou expiré" });
+    res.status(401).json({ error: " Token invalide ou expiré" });
   }
 };

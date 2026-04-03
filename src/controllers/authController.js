@@ -10,40 +10,40 @@ exports.register = async (req, res) => {
 
     // Vérifier que les données sont présentes
     if (!email || !password) {
-      return res.status(400).json({ 
-        error: "❌ Email et mot de passe sont obligatoires" 
+      return res.status(400).json({
+        error: " Email et mot de passe sont obligatoires",
       });
     }
 
     // Vérifier que le mot de passe a au moins 6 caractères
     if (password.length < 6) {
-      return res.status(400).json({ 
-        error: "❌ Le mot de passe doit avoir au moins 6 caractères" 
+      return res.status(400).json({
+        error: " Le mot de passe doit avoir au moins 6 caractères",
       });
     }
 
     // Vérifier si l'utilisateur existe déjà
     const userExists = await User.findOne({ email });
     if (userExists) {
-      return res.status(400).json({ 
-        error: "❌ Cet email est déjà utilisé" 
+      return res.status(400).json({
+        error: " Cet email est déjà utilisé",
       });
     }
 
     // Hasher le mot de passe (coût = 10 itérations)
     console.log("📝 Hachage du mot de passe...");
     const hashedPassword = await bcrypt.hash(password, 10);
-    console.log("✅ Mot de passe haché");
+    console.log(" Mot de passe haché");
 
     // Créer l'utilisateur
     const user = await User.create({
       email: email.toLowerCase(),
-      password: hashedPassword
+      password: hashedPassword,
     });
 
-    res.status(201).json({ 
-      message: "✅ Utilisateur créé avec succès!",
-      user: { id: user._id, email: user.email }
+    res.status(201).json({
+      message: " Utilisateur créé avec succès!",
+      user: { id: user._id, email: user.email },
     });
   } catch (error) {
     console.error("Erreur register:", error);
@@ -58,24 +58,24 @@ exports.login = async (req, res) => {
 
     // Vérifier que les données sont présentes
     if (!email || !password) {
-      return res.status(400).json({ 
-        error: "❌ Email et mot de passe requis" 
+      return res.status(400).json({
+        error: " Email et mot de passe requis",
       });
     }
 
     // Trouver l'utilisateur
     const user = await User.findOne({ email: email.toLowerCase() });
     if (!user) {
-      return res.status(401).json({ 
-        error: "❌ Email ou mot de passe incorrect" 
+      return res.status(401).json({
+        error: " Email ou mot de passe incorrect",
       });
     }
 
     // Vérifier le mot de passe
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
-      return res.status(401).json({ 
-        error: "❌ Email ou mot de passe incorrect" 
+      return res.status(401).json({
+        error: " Email ou mot de passe incorrect",
       });
     }
 
@@ -83,36 +83,15 @@ exports.login = async (req, res) => {
     const token = jwt.sign(
       { id: user._id, email: user.email },
       process.env.JWT_SECRET,
-      { expiresIn: "24h" }
+      { expiresIn: "24h" },
     );
 
-    res.json({ 
-      message: "✅ Connexion réussie!",
-      token 
+    res.json({
+      message: " Connexion réussie!",
+      token,
     });
   } catch (error) {
     console.error("Erreur login:", error);
     res.status(500).json({ error: error.message });
   }
 };
-
-
-
- `src/controllers/authController.js`**
-
-
-
-MONGODB_URI=mongodb+srv://rico3836_db-user:VOTRE_PASSWORD@cluster1.cmqnudr.mongodb.net/taskflow?retryWrites=true&w=majority
-PORT=3000
-JWT_SECRET=votre_cle_secrete_super_forte_12345
-NODE_ENV=development
-
-
-
-POST http://localhost:3000/api/auth/register
-
-Body:
-{
-  "email": "riko@email.com",
-  "password": "monmotdepasse123"
-}
