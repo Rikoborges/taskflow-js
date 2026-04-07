@@ -1,41 +1,40 @@
 const Task = require("../models/Task");
 
-// Créer une tâche (POST)
 exports.createTask = async (req, res) => {
   try {
-    const task = await Task.create(req.body);
+    const task = await Task.create({
+      ...req.body,
+      userId: req.userId
+    });
     res.status(201).json(task);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-// Lister toutes les tâches (GET)
 exports.getTasks = async (req, res) => {
   try {
-    const tasks = await Task.find({});
+    const tasks = await Task.find({ userId: req.userId }).sort({ createdAt: -1 });
     res.status(200).json(tasks);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-// Lister seulement les tâches complétées (GET /completed)
 exports.getCompletedTasks = async (req, res) => {
   try {
-    const tasks = await Task.find({ completed: true });
+    const tasks = await Task.find({ userId: req.userId, completed: true });
     res.status(200).json(tasks);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-// Mettre à jour une tâche (PUT)
 exports.updateTask = async (req, res) => {
   try {
     const task = await Task.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
-      runValidators: true, // Valida ao atualizar
+      runValidators: true
     });
     
     if (!task) {
@@ -48,7 +47,6 @@ exports.updateTask = async (req, res) => {
   }
 };
 
-// Supprimer une tâche (DELETE)
 exports.deleteTask = async (req, res) => {
   try {
     const task = await Task.findByIdAndDelete(req.params.id);

@@ -20,8 +20,12 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.3",
+<<<<<<< HEAD
     "mongodb": "^7.1.1",
     "mongoose": "^7.0.0"
+=======
+    "mongoose": "^7.8.9"
+>>>>>>> ca52d0b (Ateration)
   },
   "devDependencies": {
     "nodemon": "^2.0.22"

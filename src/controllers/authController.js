@@ -10,8 +10,13 @@ exports.register = async (req, res) => {
 
     // Vérifier que les données sont présentes
     if (!email || !password) {
+<<<<<<< HEAD
       return res.status(400).json({
         error: " Email et mot de passe sont obligatoires",
+=======
+      return res.status(400).json({ 
+        error: " Email et mot de passe sont obligatoires" 
+>>>>>>> ca52d0b (Ateration)
       });
     }
 
@@ -95,3 +100,13 @@ exports.login = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+<<<<<<< HEAD
+=======
+
+
+
+ 
+
+
+
+>>>>>>> ca52d0b (Ateration)
